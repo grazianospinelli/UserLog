@@ -8,6 +8,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 import { sha256 } from 'react-native-sha256';
 import firebase from 'react-native-firebase';
+import IP from '../config/IP';
 
 
 export default class register extends Component {
@@ -71,7 +72,7 @@ export default class register extends Component {
 		
 		
 		
-		fetch('http://192.106.234.90/data1/FcmExample/register.php', {
+		fetch(`${IP}/register.php`, {
 			method: 'post',
 			header:{
 				'Accept': 'application/json',
@@ -88,7 +89,7 @@ export default class register extends Component {
 		.then((responseJson) => {alert(responseJson);})
 		.catch((error) => {alert(error);});
 
-		fetch('http://192.106.234.90/data1/FcmExample/RegisterDevice.php', {
+		fetch(`${IP}/RegisterDevice.php`, {
               method: 'POST',
               headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
               body: JSON.stringify({

@@ -84,7 +84,7 @@ export default class login extends Component {
 		}
 		else{
 		
-			fetch('http://192.106.234.90/data1/FcmExample/login.php',{
+			fetch(`${IP}/login.php`,{
 				method:'post',
 				header:{
 					'Accept': 'application/json',
@@ -127,13 +127,13 @@ export default class login extends Component {
 		
 		
 		<TextInput
-		placeholder="Enter Email"
-		style={{width:200, 
-			margin:20,
-			borderWidth: 1,
-			borderColor: this.state.passWarn ? 'gray' : 'red'}}
-		autoCapitalize='characters'
-		onChangeText={userEmail => this.setState({userEmail.trim()})}
+			placeholder="Enter Email"
+			style={{width:200, 
+				margin:20,
+				borderWidth: 1,
+				borderColor: this.state.passWarn ? 'gray' : 'red'}}
+			autoCapitalize='characters'
+			onChangeText={userEmail => this.setState({userEmail.trim()})}
 		/>
 		
 
@@ -141,15 +141,15 @@ export default class login extends Component {
 		<Text style={{margin:5,color:'red'}}>{this.state.emailWarn}</Text>
 
 		<TextInput
-		placeholder="Enter Password"
-		secureTextEntry={true}
-		style={{width:200, 
-				margin:20,
-				borderWidth: 1,
-				borderColor: this.state.passWarn ? 'gray' : 'red'}}
-		
-		onChangeText= {userPassword => sha256(userPassword.trim()).
-			then(userPassword => {this.setState({userPassword});})}
+			placeholder="Enter Password"
+			secureTextEntry={true}
+			style={{width:200, 
+					margin:20,
+					borderWidth: 1,
+					borderColor: this.state.passWarn ? 'gray' : 'red'}}
+			
+			onChangeText= {userPassword => sha256(userPassword.trim()).
+				then(userPassword => {this.setState({userPassword});})}
 		/>
 
 		<Text style={{margin:5,color:'red'}}>{this.state.passWarn}</Text>
