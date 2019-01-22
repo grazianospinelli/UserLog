@@ -8,6 +8,9 @@ import {
 import firebase from 'react-native-firebase';
 import { sha256 } from 'react-native-sha256';
 import { StackNavigator } from 'react-navigation';
+import TextField from '../components/textfield'
+import validation from '../components/validation'
+import validate from '../components/validation_wrapper'
 
 
 export default class login extends Component {
@@ -18,8 +21,8 @@ export default class login extends Component {
 			userEmail:'',
 			userPassword:'',
 			userToken:'',
-			emailWarn:'',
-			passWarn:''
+			emailError:'',
+			passwordError:''
 		}
 	}
 	
@@ -64,26 +67,17 @@ export default class login extends Component {
 
 	
 	login = () =>{
-		const {userEmail,userPassword,userToken,emailWarn,passWarn} = this.state;
-		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-		if(userEmail==""){
-			//alert("Please enter Email address");
-		  this.setState({emailWarn:'Please enter Email address'})
-			
-		}
-		
-		else if(reg.test(userEmail) === false)
-		{
-		//alert("Email is Not Correct");
-		this.setState({emailWarn:'Email is Not Correct'})
-		return false;
-		}
 
-		else if(userPassword==""){
-			this.setState({passWarn:'Please enter password'})
-		}
-		else{
-		
+		const emailError = validate('email', this.state.email)
+		const passwordError = validate('password', this.state.password)
+	
+		this.setState({
+		  emailError: emailError,
+		  passwordError: passwordError
+		})
+	
+		if (!emailError && !passwordError) {
+
 			fetch(`${IP}/login.php`,{
 				method:'post',
 				header:{
@@ -121,6 +115,22 @@ export default class login extends Component {
 		Keyboard.dismiss();
 	}
 	
+
+	validateRegister() {
+		const emailError = validate('email', this.state.email)
+		const passwordError = validate('password', this.state.password)
+	
+		this.setState({
+		  emailError: emailError,
+		  passwordError: passwordError
+		})
+	
+		if (!emailError && !passwordError) {
+		  alert('Details are valid!')
+		}
+	}
+
+
   render() {
     return (
 	<View style={styles.container}>    
