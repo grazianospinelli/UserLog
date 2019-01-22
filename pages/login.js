@@ -17,7 +17,9 @@ export default class login extends Component {
 		this.state={
 			userEmail:'',
 			userPassword:'',
-			userToken:''
+			userToken:'',
+			emailWarn:'',
+			passWarn:''
 		}
 	}
 	
@@ -62,56 +64,58 @@ export default class login extends Component {
 
 	
 	login = () =>{
-		const {userEmail,userPassword,userToken} = this.state;
+		const {userEmail,userPassword,userToken,emailWarn,passWarn} = this.state;
 		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
 		if(userEmail==""){
 			//alert("Please enter Email address");
-		  this.setState({email:'Please enter Email address'})
+		  this.setState({emailWarn:'Please enter Email address'})
 			
 		}
 		
 		else if(reg.test(userEmail) === false)
 		{
 		//alert("Email is Not Correct");
-		this.setState({email:'Email is Not Correct'})
+		this.setState({emailWarn:'Email is Not Correct'})
 		return false;
-		  }
+		}
 
 		else if(userPassword==""){
-		this.setState({email:'Please enter password'})
+			this.setState({passWarn:'Please enter password'})
 		}
 		else{
 		
-		fetch('http://192.106.234.90/data1/FcmExample/login.php',{
-			method:'post',
-			header:{
-				'Accept': 'application/json',
-				'Content-type': 'application/json'
-			},
-			body:JSON.stringify({
-				// we will pass our input data to server
-				email: userEmail,
-				password: userPassword,
-				token: userToken
+			fetch('http://192.106.234.90/data1/FcmExample/login.php',{
+				method:'post',
+				header:{
+					'Accept': 'application/json',
+					'Content-type': 'application/json'
+				},
+				body:JSON.stringify({
+					// we will pass our input data to server
+					email: userEmail,
+					password: userPassword,
+					token: userToken
+				})
+				
 			})
+			.then((response) => response.json())
+			.then((responseJson)=>{
+				if(responseJson == "ok"){
+					// redirect to profile page
+					alert("Successfully Login");
+					//salva token in locale e remoto
+
+
+					this.props.navigation.navigate("Profile");
+				}else{
+					alert("Wrong Login Details");
+				}
+			})
+			.catch((error)=>{
+			console.error(error)
+			});
+
 			
-		})
-		.then((response) => response.json())
-		 .then((responseJson)=>{
-			 if(responseJson == "ok"){
-				 // redirect to profile page
-				 alert("Successfully Login");
-				 //salva token in locale e remoto
-
-
-				 this.props.navigation.navigate("Profile");
-			 }else{
-				 alert("Wrong Login Details");
-			 }
-		 })
-		 .catch((error)=>{
-		 console.error(error)
-		 });
 		}
 				
 		Keyboard.dismiss();
@@ -120,27 +124,44 @@ export default class login extends Component {
   render() {
     return (
 	<View style={styles.container}>    
-		<Text style={{padding:10,margin:10,color:'red'}}>{this.state.email}</Text>
+		
 		
 		<TextInput
 		placeholder="Enter Email"
-		style={{width:200, margin:10}}
-		onChangeText={userEmail => this.setState({userEmail})}
+		style={{width:200, 
+			margin:20,
+			borderWidth: 1,
+			borderColor: this.state.passWarn ? 'gray' : 'red'}}
+		autoCapitalize='characters'
+		onChangeText={userEmail => this.setState({userEmail.trim()})}
 		/>
 		
+
+		
+		<Text style={{margin:5,color:'red'}}>{this.state.emailWarn}</Text>
+
 		<TextInput
 		placeholder="Enter Password"
 		secureTextEntry={true}
-		style={{width:200, margin:10}}
-		onChangeText= {userPassword => sha256(userPassword).
+		style={{width:200, 
+				margin:20,
+				borderWidth: 1,
+				borderColor: this.state.passWarn ? 'gray' : 'red'}}
+		
+		onChangeText= {userPassword => sha256(userPassword.trim()).
 			then(userPassword => {this.setState({userPassword});})}
 		/>
-			
+
+		<Text style={{margin:5,color:'red'}}>{this.state.passWarn}</Text>
+
 		<TouchableOpacity
 			onPress={this.login}
 			style={{width:200,padding:10,backgroundColor:'magenta',alignItems:'center'}}>
 			<Text style={{color:'white'}}>Login</Text>
 		</TouchableOpacity>
+
+
+		
 		
     </View>
   
@@ -155,6 +176,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+	  
+  	
 
 });
 

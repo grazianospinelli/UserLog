@@ -11,17 +11,7 @@ import firebase from 'react-native-firebase';
 
 
 export default class register extends Component {
-	   static navigationOptions= ({navigation}) =>({
-		  title: 'Register',	
-		  headerRight:	
-		  <TouchableOpacity
-			onPress={() => navigation.navigate('Home')}
-			style={{margin:10,backgroundColor:'orange',padding:10}}>
-			<Text style={{color:'#ffffff'}}>Home</Text>
-		  </TouchableOpacity>
-		
-	});  	
-		  
+	
 	constructor(props){
 		super(props)
 		this.state={
@@ -32,6 +22,18 @@ export default class register extends Component {
 		}
 	}
 	
+	static navigationOptions= ({navigation}) =>({
+		  title: 'Register',	
+		  headerRight:	
+		  <TouchableOpacity
+			onPress={() => navigation.navigate('Home')}
+			style={{margin:10,backgroundColor:'orange',padding:10}}>
+			<Text style={{color:'#ffffff'}}>Home</Text>
+		  </TouchableOpacity>
+		
+	});  	
+		  
+		
 	componentDidMount = async () => {
         const enabled = await firebase.messaging().hasPermission();
         if (enabled) {
@@ -67,7 +69,7 @@ export default class register extends Component {
 		const {userPassword} = this.state;
 		const {userToken} = this.state;
 		
-		sha256("Test").then( hash => {alert(hash);} )
+		
 		
 		fetch('http://192.106.234.90/data1/FcmExample/register.php', {
 			method: 'post',
@@ -100,50 +102,47 @@ export default class register extends Component {
 	}
 	
   	render() {
-    return (
-	<View style={styles.container}>
-      	
-	
-	  <TextInput
-	  placeholder="Enter Name"
-	  style={{width:250,margin:10, borderColor:"#333", 
-	  borderWidth:1}}	
-	  underlineColorAndroid="transparent"
-  	  onChangeText= {userName => this.setState({userName})}
-  	  // Tentativo di azzeramento del campo dopo il submit
-  	  // value={this.state.userName ? null : this.state.userName} 
-      // onSubmitEditing={ () => {this.setState({userName:""}) } } 
-	  />
-	  
-	  <TextInput
-	  placeholder="Enter Email"
-	  style={{width:250,margin:10, borderColor:"#333", 
-	  borderWidth:1}}	
-	  underlineColorAndroid="transparent"
-	  onChangeText= {userEmail => this.setState({userEmail})}
-	  />
-	  
-	  <TextInput
-	  placeholder="Enter Password"
-	  style={{width:250,margin:10, borderColor:"#333", 
-	  borderWidth:1}}	
-	  underlineColorAndroid="transparent"
-	  onChangeText= {userPassword => sha256(userPassword).
-	  	then(userPassword => {this.setState({userPassword});})}
-	  />
-	  
-	  <TouchableOpacity
-		onPress={this.userRegister}
-		style={{width:250,padding:10, backgroundColor:'magenta',
-		alignItems:'center'}}>
-	  <Text style={{color:'#fff'}}>Signup</Text>
-	  </TouchableOpacity>
-	  
-	  
-     </View>
-  
-   );
-  }
+			return (
+				<View style={styles.container}>
+							
+				
+					<TextInput
+						placeholder="Enter Name"
+						style={{width:250,margin:10, borderColor:"#333", borderWidth:1}}	
+						underlineColorAndroid="transparent"
+						onChangeText= {userName => this.setState({userName})}
+							// Tentativo di azzeramento del campo dopo il submit
+							// value={this.state.userName ? null : this.state.userName} 
+							// onSubmitEditing={ () => {this.setState({userName:""}) } } 
+					/>
+					
+					<TextInput
+						placeholder="Enter Email"
+						style={{width:250,margin:10, borderColor:"#333", borderWidth:1}}	
+						underlineColorAndroid="transparent"
+						autoCapitalize = 'characters'
+						onChangeText= {userEmail => this.setState({userEmail})}
+					/>
+					
+					<TextInput
+						placeholder="Enter Password"
+						style={{width:250,margin:10, borderColor:"#333", borderWidth:1}}	
+						underlineColorAndroid="transparent"
+						onChangeText= {userPassword => sha256(userPassword).
+							then(userPassword => {this.setState({userPassword});})}
+					/>
+					
+					<TouchableOpacity
+						onPress={this.userRegister}
+						style={{width:250,padding:10, backgroundColor:'magenta', alignItems:'center'}}>
+						<Text style={{color:'#fff'}}>Signup</Text>
+					</TouchableOpacity>
+					
+					
+				</View>
+		
+			);
+    }
 }
 
 const styles = StyleSheet.create({

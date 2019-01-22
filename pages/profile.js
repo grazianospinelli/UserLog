@@ -18,6 +18,8 @@ static navigationOptions= ({navigation}) =>({
 		);
 	}
 }
+
+
 const styles = StyleSheet.create({
 	container:{
 		display:'flex',alignItems:'center',
