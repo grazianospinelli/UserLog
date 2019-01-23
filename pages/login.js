@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import { sha256 } from 'react-native-sha256';
+import IP from '../config/IP';
+import Validate from '../components/validate.js'
 import { StackNavigator } from 'react-navigation';
 
 
@@ -62,27 +64,23 @@ export default class login extends Component {
 
     }
 
-	
-	login = () =>{
-		const {userEmail,userPassword,userToken,emailWarn,passWarn} = this.state;
-		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-		if(userEmail==""){
-			//alert("Please enter Email address");
-		  this.setState({emailWarn:'Please enter Email address'})
-			
-		}
-		
-		else if(reg.test(userEmail) === false)
-		{
-		//alert("Email is Not Correct");
-		this.setState({emailWarn:'Email is Not Correct'})
-		return false;
-		}
 
-		else if(userPassword==""){
-			this.setState({passWarn:'Please enter password'})
-		}
-		else{
+	
+
+	login = () =>{
+		
+		const {userEmail,userToken} = this.state;
+		const emailWarn = Validate('email', this.state.userEmail)
+		const passWarn = Validate('password', this.state.userPassword)
+		const shaPassword = sha256(this.state.userPassword);
+
+		this.setState({
+			emailWarn: emailWarn,
+			passWarn: passWarn
+		})
+	  
+  		if (!emailWarn && !passWarn) {
+		
 		
 			fetch(`${IP}/login.php`,{
 				method:'post',
@@ -93,7 +91,7 @@ export default class login extends Component {
 				body:JSON.stringify({
 					// we will pass our input data to server
 					email: userEmail,
-					password: userPassword,
+					password: shaPassword,
 					token: userToken
 				})
 				
@@ -131,12 +129,10 @@ export default class login extends Component {
 			style={{width:200, 
 				margin:20,
 				borderWidth: 1,
-				borderColor: this.state.passWarn ? 'gray' : 'red'}}
-			autoCapitalize='characters'
-			onChangeText={userEmail => this.setState({userEmail.trim()})}
+				borderColor: this.state.emailWarn ? 'red' : 'gray'}}
+			onChangeText={userEmail => { userEmail.trim(); this.setState({userEmail})}}
+			onBlur={() => { warn = Validate('email', this.state.userEmail); this.setState({emailWarn: warn})}}
 		/>
-		
-
 		
 		<Text style={{margin:5,color:'red'}}>{this.state.emailWarn}</Text>
 
@@ -144,12 +140,13 @@ export default class login extends Component {
 			placeholder="Enter Password"
 			secureTextEntry={true}
 			style={{width:200, 
-					margin:20,
-					borderWidth: 1,
-					borderColor: this.state.passWarn ? 'gray' : 'red'}}
-			
-			onChangeText= {userPassword => sha256(userPassword.trim()).
-				then(userPassword => {this.setState({userPassword});})}
+				margin:20,
+				borderWidth: 1,
+				borderColor: this.state.passWarn ? 'red' : 'gray'}}
+			// onChangeText= {userPassword => sha256(userPassword.trim()).
+			// 	then(userPassword => {this.setState({userPassword});})}
+			onChangeText={userPassword => { userPassword.trim(); this.setState({userPassword})}}
+			onBlur={() => { warn = Validate('password', this.state.userPassword); console.log(warn); this.setState({passWarn: warn})}}
 		/>
 
 		<Text style={{margin:5,color:'red'}}>{this.state.passWarn}</Text>
