@@ -6,7 +6,7 @@ import {
   View,TouchableOpacity,TextInput,Button,Keyboard
 } from 'react-native';
 import firebase from 'react-native-firebase';
-import { sha256 } from 'react-native-sha256';
+import md5 from 'md5';
 import IP from '../config/IP';
 import Validate from '../components/validate.js'
 import { StackNavigator } from 'react-navigation';
@@ -69,15 +69,17 @@ export default class login extends Component {
 
 	login = () =>{
 		
-		const {userEmail,userToken} = this.state;
+		const {userEmail,userToken,userPassword} = this.state;
 		const emailWarn = Validate('email', this.state.userEmail)
 		const passWarn = Validate('password', this.state.userPassword)
-		const shaPassword = sha256(this.state.userPassword);
-
+		
 		this.setState({
 			emailWarn: emailWarn,
 			passWarn: passWarn
 		})
+
+		const md5Password = md5(userPassword);
+		const upperEmail = userEmail.toUpperCase();
 	  
   		if (!emailWarn && !passWarn) {
 		
@@ -90,8 +92,8 @@ export default class login extends Component {
 				},
 				body:JSON.stringify({
 					// we will pass our input data to server
-					email: userEmail,
-					password: shaPassword,
+					email: upperEmail,
+					password: md5Password,
 					token: userToken
 				})
 				
@@ -142,9 +144,7 @@ export default class login extends Component {
 			style={{width:200, 
 				margin:20,
 				borderWidth: 1,
-				borderColor: this.state.passWarn ? 'red' : 'gray'}}
-			// onChangeText= {userPassword => sha256(userPassword.trim()).
-			// 	then(userPassword => {this.setState({userPassword});})}
+				borderColor: this.state.passWarn ? 'red' : 'gray'}}			
 			onChangeText={userPassword => { userPassword.trim(); this.setState({userPassword})}}
 			onBlur={() => { warn = Validate('password', this.state.userPassword); console.log(warn); this.setState({passWarn: warn})}}
 		/>
