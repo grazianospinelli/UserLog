@@ -3,7 +3,8 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,TextInput,TouchableOpacity
+  View,TextInput,TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import md5 from 'md5';
@@ -121,20 +122,27 @@ export default class register extends Component {
   	render() {
 			return (
 				<View style={styles.container}>
-							
-				
+
+				<ImageBackground 
+					source={require('../components/images/waiter_back.jpg')}
+					style={styles.container}
+            	>
+
+				<View style={styles.inputWrapper}>
 					<TextInput
 						placeholder="Enter Name"
-						style={{width:200,margin:10, borderColor:"gray", borderWidth:1}}	
+						style={styles.inputSearch}	
 						underlineColorAndroid="transparent"
 						onChangeText= {userName => this.setState({userName})}							
 					/>
+				</View>
 					
 					<TextInput
 						placeholder="Enter Email"
 						style={{width:200, 
 							margin:10,
 							borderWidth: 1,
+							borderRadius: 10,
 							borderColor: this.state.emailWarn ? 'red' : 'gray'}}
 						onChangeText={userEmail => { userEmail.trim(); this.setState({userEmail})}}
 						onBlur={() => { warn = Validate('email', this.state.userEmail); this.setState({emailWarn: warn})}}
@@ -148,6 +156,7 @@ export default class register extends Component {
 						style={{width:200, 
 							margin:10,
 							borderWidth: 1,
+							borderRadius: 10,
 							borderColor: this.state.passWarn ? 'red' : 'gray'}}
 						onChangeText={userPassword => { userPassword.trim(); this.setState({userPassword})}}
 						onBlur={() => { warn = Validate('password', this.state.userPassword); console.log(warn); this.setState({passWarn: warn})}}
@@ -161,8 +170,12 @@ export default class register extends Component {
 						<Text style={{color:'#fff'}}>Signup</Text>
 					</TouchableOpacity>
 					
-					
+				</ImageBackground>
+
 				</View>
+			
+				
+				
 		
 			);
     }
@@ -175,16 +188,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  inputWrapper: {
+    flex: 1,
+	backgroundColor: 'transparent',
+	width:200,
+	margin:10, 
+	borderRadius: 10, 
+	borderWidth:1,
+    position: 'absolute', 
+    top: 0,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  inputSearch: {
+	backgroundColor: 'rgba(255,255,255,0.4)', // 40% opaque
+	color: 'white',
+  }  
 });
 
 AppRegistry.registerComponent('register', () => register);
