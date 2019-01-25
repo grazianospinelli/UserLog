@@ -581,9 +581,18 @@ Quando ci sono cambiamenti sull'icona git appare un badge numerico
 
 Cliccare sull'icona e decidere quali cambiamenti si vogliono cliccando sul + (stage) oppure sull'undo.
 
-una volta decisi i cambiamenti si puo cliccare sul segno di spunta che è il commit dando un nome al cambiamento
+una volta decisi i cambiamenti si puo cliccare sul segno di spunta che è il commit dando un nome al cambiamento.
+Il commit registra i cambiamenti sul repository locale, per sincronizzarli in remoto bisogna dare il comando Push
+selezionandolo dall'icona Ellipse ...
 
 per tornare indietro click su ... e poi Undo Last Commit
+
+Pull invece scarica in locale i cambiamenti che sono avvenuti sul repository remoto.
+
+Per scaricare repository remoto copiare l'URL da github
+nella welcome page di VSCode click su "Clone Git Repository.."
+Copiare l'URL e specificare la cartella locale
+Click su Open Repository.
 
 
 
