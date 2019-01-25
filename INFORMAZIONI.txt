@@ -531,6 +531,12 @@ onChangeText= {userPassword => sha256(userPassword.trim()).
 ___________________________________________________________________
 
 Installato VSCode
+SHORTCUT VSCode:
+CTRL+ù        - Commenta automaticamente
+TAB+SHIFT     - Back TAB
+CTRL+s        - Salva
+CTRL+SHIFT+P  - Palette Comandi
+
 Installata Estensione ESLint dentro VSCode
 da terminale di VSCode installato globalmente eslint:
 npm install -g eslint
