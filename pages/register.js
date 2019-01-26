@@ -131,7 +131,7 @@ export default class register extends Component {
 				
 
 				<ImageBackground 
-					source={require('../components/images/waiter_back.jpg')}
+					source={require('../components/images/waiter.jpg')}
 					style={styles.backgroundImage}
             	>
 
