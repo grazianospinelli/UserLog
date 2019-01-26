@@ -9,8 +9,10 @@ import {
 import { StackNavigator } from 'react-navigation';
 import md5 from 'md5';
 import firebase from 'react-native-firebase';
+import Icon from "react-native-vector-icons/SimpleLineIcons";
 import IP from '../config/IP';
 import Validate from '../components/validate.js'
+
 
 
 export default class register extends Component {
@@ -31,13 +33,18 @@ export default class register extends Component {
 	}
 	
 	static navigationOptions= ({navigation}) =>({
-		  title: 'Register',	
-		  headerRight:	
-		  <TouchableOpacity
-			onPress={() => navigation.navigate('Home')}
-			style={{margin:10,backgroundColor:'orange',padding:10}}>
-			<Text style={{color:'#ffffff'}}>Home</Text>
-		  </TouchableOpacity>
+			title: 'Register',
+			headerTintColor: 'white',
+			// navBarHidden: true,
+			headerStyle: {backgroundColor: 'transparent'},
+			// headerLeft:
+			// <HeaderBarItem to='InfoScreen' title='App info' />,	
+			headerRight:	
+			<TouchableOpacity
+				onPress={() => navigation.navigate('Home')}
+				style={{margin:10,backgroundColor:'#f24f32',padding:10}}>
+				<Text style={{color:'#ffffff'}}>Home</Text>
+			</TouchableOpacity>
 		
 	});  	
 		  
@@ -121,87 +128,104 @@ export default class register extends Component {
 	
   	render() {
 			return (
-				<View style={styles.container}>
+				
 
 				<ImageBackground 
 					source={require('../components/images/waiter_back.jpg')}
-					style={styles.container}
+					style={styles.backgroundImage}
             	>
 
-				<View style={styles.inputWrapper}>
-					<TextInput
-						placeholder="Enter Name"
-						style={styles.inputSearch}	
-						underlineColorAndroid="transparent"
-						onChangeText= {userName => this.setState({userName})}							
-					/>
-				</View>
-					
-					<TextInput
-						placeholder="Enter Email"
-						style={{width:200, 
-							margin:10,
-							borderWidth: 1,
-							borderRadius: 10,
-							borderColor: this.state.emailWarn ? 'red' : 'gray'}}
-						onChangeText={userEmail => { userEmail.trim(); this.setState({userEmail})}}
-						onBlur={() => { warn = Validate('email', this.state.userEmail); this.setState({emailWarn: warn})}}
-					/>
-		
-					<Text style={{color:'red'}}>{this.state.emailWarn}</Text>
-					
-					<TextInput
-						placeholder="Enter Password"
-						secureTextEntry={true}
-						style={{width:200, 
-							margin:10,
-							borderWidth: 1,
-							borderRadius: 10,
-							borderColor: this.state.passWarn ? 'red' : 'gray'}}
-						onChangeText={userPassword => { userPassword.trim(); this.setState({userPassword})}}
-						onBlur={() => { warn = Validate('password', this.state.userPassword); console.log(warn); this.setState({passWarn: warn})}}
-					/>
+				<View style={styles.container}>
 
-					<Text style={{color:'red'}}>{this.state.passWarn}</Text>
-
-					<TouchableOpacity
-						onPress={this.userRegister}
-						style={{width:250,padding:10, backgroundColor:'magenta', alignItems:'center'}}>
-						<Text style={{color:'#fff'}}>Signup</Text>
-					</TouchableOpacity>
+						<View style={styles.inputForm}>	
+						<Icon style={styles.searchIcon} name="user" size={20} color='transparent'/>				
+						<TextInput
+							placeholder="Enter Name"
+							style={{borderRadius: 25, width:180}}	
+							underlineColorAndroid="transparent"
+							onChangeText= {userName => this.setState({userName})}							
+						/>
+						</View>
+						
+						<Text>{}</Text>
 					
-				</ImageBackground>
+						<View style={styles.inputForm}>
+						<Icon style={styles.searchIcon} name="envelope" size={20} color={this.state.emailWarn ? 'red' : 'transparent'}  />		
+						<TextInput
+							placeholder="Enter Email"
+							style={{borderRadius: 25, width:180}}
+							onChangeText={userEmail => { userEmail.trim(); this.setState({userEmail})}}
+							onBlur={() => { warn = Validate('email', this.state.userEmail); this.setState({emailWarn: warn})}}
+						/>
+						</View>
+			
+						<Text style={{color:'red'}}>{this.state.emailWarn}</Text>
+						
+						<View style={styles.inputForm}>	
+						<Icon style={styles.searchIcon} name="lock" size={20} color={this.state.passWarn ? 'red' : 'transparent'} />
+						<TextInput
+							placeholder="Enter Password"
+							secureTextEntry={true}
+							style={{borderRadius: 25, width:180}}
+							onChangeText={userPassword => { userPassword.trim(); this.setState({userPassword})}}
+							onBlur={() => { warn = Validate('password', this.state.userPassword); this.setState({passWarn: warn})}}
+						/>
+						</View>
+
+						<Text style={{color:'red'}}>{this.state.passWarn}</Text>
+
+						<TouchableOpacity
+							onPress={this.userRegister}
+							style={{borderRadius: 25, width:250, margin: 50, padding:15, backgroundColor:'#f24f32', alignItems:'center'}}>
+							<Text style={{color:'#fff'}}>Signup</Text>						
+						</TouchableOpacity>
+					
+				
+
+				
 
 				</View>
 			
 				
-				
+				</ImageBackground>
 		
 			);
     }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  inputWrapper: {
-    flex: 1,
-	backgroundColor: 'transparent',
-	width:200,
-	margin:10, 
-	borderRadius: 10, 
-	borderWidth:1,
-    position: 'absolute', 
-    top: 0,
-  },
-  inputSearch: {
-	backgroundColor: 'rgba(255,255,255,0.4)', // 40% opaque
-	color: 'white',
-  }  
+
+	container: {
+		flex: 1,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		// backgroundColor: '#F5FCFF',
+	},
+
+	backgroundImage: {
+		flex: 1,
+		resizeMode: 'cover', // or 'stretch'
+	},
+
+	inputForm: {
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		//backgroundColor: 'transparent',
+		width:250,
+		margin:1,
+		borderRadius: 25, 
+		//borderWidth:1,
+		//borderColor: 'gray',
+		backgroundColor: 'rgba(255,255,255,0.4)',
+	},
+
+	searchIcon: {
+		padding: 10,
+		margin: 5,
+	},	
+
+  
 });
 
 AppRegistry.registerComponent('register', () => register);

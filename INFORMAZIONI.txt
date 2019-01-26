@@ -469,19 +469,20 @@ ________________________________________________________________________________
 
 Nella programmazione web, un polyfill (o polyfiller) è del codice scaricabile che fornisce dei servizi che non fanno parte di un browser web. 
 Esso implementa tecnologie che uno sviluppatore si aspetta il browser metta a disposizione nativamente, fornendo un ventaglio più uniforme di API. 
-Ad esempio, molte caratteristiche di HTML5 non sono supportate da versioni di Internet Explorer precedenti la 8, ma possono essere utilizzate dalle pagine web se queste installano un polyfill. 
+Ad esempio, molte caratteristiche di HTML5 non sono supportate da versioni di Internet Explorer precedenti la 8, ma possono essere utilizzate 
+dalle pagine web se queste installano un polyfill. 
 Webshim e HTML5 Shivs sono concetti correlati. 
 
 _____________________________________________________________________________________________
 
 Analogie tra HTML e React Native
 
-HTML		React Native
------------	----------------------
-div 		View
-img 		Image
-span, p 	Text
-ul/ol, li 	ListView, child items
+HTML		      React Native
+-----------	  ----------------------
+div 		      View
+img 		      Image
+span, p 	    Text
+ul/ol, li 	  ListView, child items
 
 _____________________________________________________________________________________________
 
@@ -590,6 +591,7 @@ per tornare indietro click su ... e poi Undo Last Commit
 Pull invece scarica in locale i cambiamenti che sono avvenuti sul repository remoto.
 
 Per scaricare repository remoto copiare l'URL da github
+Da Command Palette digitare git clone oppure
 nella welcome page di VSCode click su "Clone Git Repository.."
 Copiare l'URL e specificare la cartella locale
 Click su Open Repository.
