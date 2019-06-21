@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "673527608086",
-    "firebase_url": "https://firemess-fb85f.firebaseio.com",
+    "project_number": "****************",
+    "firebase_url": "https://****************************",
     "project_id": "firemess-fb85f",
     "storage_bucket": "firemess-fb85f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:673527608086:android:618367d79572ce67",
+        "mobilesdk_app_id": "1:*******************",
         "android_client_info": {
           "package_name": "com.firemess"
         }
       },
       "oauth_client": [
         {
-          "client_id": "673527608086-86133jlpol3b6rg3mlc2rrcqku9jbo3f.apps.googleusercontent.com",
+          "client_id": "**************************.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBuxOM-IfQem0VqZecsd2-07RxSNIzhjHs"
+          "current_key": "******************************"
         }
       ],
       "services": {
